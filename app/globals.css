@@ -1,27 +1,85 @@
+/* === GOVZY - Styles globaux === */
+/* Note : les polices Google Fonts sont chargées via <link> dans layout.tsx */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Variables CSS globales Govzy */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F5F7FA;
+  --foreground: #2D3748;
+  --govzy-blue: #1B3F8B;
+  --govzy-blue-light: #4A90D9;
+  --govzy-orange: #FF6B35;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Reset base mobile-first */
+* {
+  box-sizing: border-box;
 }
 
 body {
+  background-color: var(--background);
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%; /* Évite zoom involontaire iOS */
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Animation fadeIn pour la démo animée */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Composants Govzy réutilisables */
+@layer components {
+  /* Bouton principal orange - action primaire */
+  .btn-primary {
+    @apply bg-govzy-orange text-white font-semibold px-6 py-3 rounded-xl
+           min-h-[44px] flex items-center justify-center gap-2
+           hover:bg-orange-600 active:scale-95 transition-all duration-200
+           shadow-md hover:shadow-lg text-base;
+  }
+
+  /* Bouton secondaire bleu institutionnel */
+  .btn-secondary {
+    @apply bg-govzy-blue text-white font-semibold px-6 py-3 rounded-xl
+           min-h-[44px] flex items-center justify-center gap-2
+           hover:bg-blue-900 active:scale-95 transition-all duration-200
+           text-base;
+  }
+
+  /* Bouton contour pour actions secondaires */
+  .btn-outline {
+    @apply border-2 border-govzy-blue text-govzy-blue font-semibold px-6 py-3 rounded-xl
+           min-h-[44px] flex items-center justify-center gap-2
+           hover:bg-govzy-blue hover:text-white transition-all duration-200
+           text-base;
+  }
+
+  /* Card standard */
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-6;
+  }
+
+  /* Container de section */
+  .section-container {
+    @apply py-16 px-4 md:px-8 max-w-6xl mx-auto;
   }
 }
