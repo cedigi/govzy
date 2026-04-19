@@ -119,8 +119,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Envoi email de confirmation en arrière-plan (sans bloquer la réponse)
-  envoyerEmailConfirmation(email).catch((err) =>
+  await envoyerEmailConfirmation(email).catch((err) =>
     console.error("[brevo] Erreur envoi email:", err)
   );
 
