@@ -49,8 +49,11 @@ export default function Sidebar({ prenom }: Props) {
               fontWeight: 500,
               textDecoration: 'none',
               color: active ? 'white' : 'rgba(255,255,255,0.5)',
-              background: active ? 'rgba(249,115,22,0.15)' : 'transparent',
-              border: active ? '1px solid rgba(249,115,22,0.25)' : '1px solid transparent',
+              background: active ? 'rgba(255,255,255,0.1)' : 'transparent',
+              borderLeft: active ? '3px solid #f97316' : '3px solid transparent',
+              borderTop: '1px solid transparent',
+              borderRight: '1px solid transparent',
+              borderBottom: '1px solid transparent',
               transition: 'all 0.2s ease',
             }}
             onMouseEnter={e => {
