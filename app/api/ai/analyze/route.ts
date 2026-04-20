@@ -52,8 +52,9 @@ Types possibles : fiche_de_paie, contrat_de_travail, facture, composition_de_men
       fileToGenerativePart(base64, file.type),
     ])
     const text = result.response.text()
-    const parsed = JSON.parse(text.replace(/```json\n?|\n?```/g, '').trim())
-    type_detecte = parsed.type ?? 'Document'
+    const jsonMatch = text.match(/\{[\s\S]*\}/)
+    const parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : {}
+    type_detecte = parsed.type ?? 'autre'
     resume = parsed.resume ?? ''
   } catch (err) {
     console.error('[analyze] Gemini error:', err)
