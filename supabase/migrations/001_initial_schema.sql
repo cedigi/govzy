@@ -56,6 +56,12 @@ create table public.suggestions (
   created_at timestamptz default now() not null
 );
 
+-- Indexes for performance
+create index documents_user_id_idx on public.documents(user_id);
+create index messages_user_id_idx on public.messages(user_id);
+create index messages_user_created_idx on public.messages(user_id, created_at desc);
+create index suggestions_user_id_idx on public.suggestions(user_id);
+
 -- RLS : chaque utilisateur voit uniquement ses données
 alter table public.profiles enable row level security;
 alter table public.documents enable row level security;
@@ -76,7 +82,8 @@ create policy "users see own suggestions" on public.suggestions
 
 -- Storage bucket pour les documents
 insert into storage.buckets (id, name, public)
-values ('documents', 'documents', false);
+values ('documents', 'documents', false)
+on conflict (id) do nothing;
 
 create policy "users upload own documents" on storage.objects
   for insert with check (bucket_id = 'documents' and auth.uid()::text = (storage.foldername(name))[1]);
