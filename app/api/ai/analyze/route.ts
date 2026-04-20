@@ -62,15 +62,11 @@ Types possibles : fiche_de_paie, contrat_de_travail, facture, composition_de_men
   }
 
   // Sauvegarde en DB
-  const { data: document, error: dbError } = await supabase
-    .from('documents')
-    .insert({
-      user_id: user.id,
-      nom: file.name,
-      type_detecte,
-      resume,
-      storage_path: storagePath,
+  const { data: document, error: dbError } = await (supabase
+    .from('documents') as unknown as {
+      insert: (v: unknown) => { select: () => { single: () => Promise<{ data: import('@/lib/supabase/types').Document | null; error: unknown }> } }
     })
+    .insert({ user_id: user.id, nom: file.name, type_detecte, resume, storage_path: storagePath })
     .select()
     .single()
 
