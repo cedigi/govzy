@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Home, FileText, Euro, Bell } from 'lucide-react'
+import Image from 'next/image'
 
 const navItems = [
   { href: '/dashboard', label: 'Accueil', icon: Home },
@@ -28,19 +29,8 @@ export default function Sidebar({ prenom }: Props) {
       gap: '4px',
       minHeight: '100vh',
     }}>
-      <div style={{
-        background: 'linear-gradient(135deg, #f97316, #ea580c)',
-        borderRadius: '12px',
-        padding: '12px 16px',
-        fontWeight: 800,
-        fontSize: '15px',
-        letterSpacing: '2px',
-        marginBottom: '20px',
-        textAlign: 'center',
-        color: 'white',
-        boxShadow: '0 4px 20px rgba(249,115,22,0.3)',
-      }}>
-        GOVZY
+      <div style={{ marginBottom: '20px', padding: '4px 8px' }}>
+        <Image src="/logo-govzy.png" alt="Govzy" width={160} height={48} style={{ width: '100%', height: 'auto' }} priority />
       </div>
 
       {navItems.map(({ href, label, icon: Icon }) => {
