@@ -13,7 +13,7 @@ export default function WaitlistCounter() {
     fetch("/api/waitlist-count")
       .then((res) => res.json())
       .then((data) => setCount(data.count))
-      .catch(() => setCount(847)); // Fallback si API indisponible
+      .catch(() => setCount(0));
   }, []);
 
   // Pendant le chargement : affiche un placeholder animé

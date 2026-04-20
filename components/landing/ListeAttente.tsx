@@ -88,7 +88,7 @@ export default function ListeAttente() {
 
             <p className="text-white/70 text-lg mb-8 leading-relaxed">
               Govzy est en cours de développement. Rejoignez les{" "}
-              <strong className="text-white">847 pionniers</strong> qui bénéficieront
+              <strong className="text-white">premiers pionniers</strong> qui bénéficieront
               d&apos;un accès anticipé et d&apos;un tarif exclusif.
             </p>
 
