@@ -102,10 +102,7 @@ async function RecentDocuments({ userId, supabase }: { userId: string; supabase:
       <h2 className="text-sm font-semibold mb-3" style={{ color: 'rgba(255,255,255,0.6)' }}>Documents récents</h2>
       <div className="flex flex-col gap-2">
         {(documents ?? []).map((doc: Document) => (
-          <div key={doc.id} className="flex items-center gap-3 p-2 rounded-lg" style={{ transition: 'background 0.2s' }}
-            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
-            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
-          >
+          <div key={doc.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5" style={{ transition: 'background 0.2s' }}>
             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm"
               style={{ background: 'rgba(249,115,22,0.15)' }}>📄</div>
             <div className="flex-1 min-w-0">
