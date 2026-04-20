@@ -1,14 +1,16 @@
 'use client'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import AuthForm from '@/components/auth/AuthForm'
 
-export default function LoginPage() {
+function LoginContent() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const message = searchParams.get('message')
   const supabase = createClient()
 
   async function handleEmailLogin(data: { email: string; password: string }) {
@@ -45,6 +47,12 @@ export default function LoginPage() {
           <p className="text-sm text-slate-500 mt-1">Bienvenue sur votre assistant administratif</p>
         </div>
 
+        {message && (
+          <div className="bg-green-50 text-green-700 text-sm p-3 rounded-lg border border-green-200 mb-4">
+            {message}
+          </div>
+        )}
+
         <button
           onClick={handleGoogleLogin}
           disabled={loading}
@@ -75,5 +83,13 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 flex items-center justify-center">Chargement...</div>}>
+      <LoginContent />
+    </Suspense>
   )
 }

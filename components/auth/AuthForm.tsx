@@ -18,7 +18,7 @@ export default function AuthForm({ mode, onSubmit, loading, error }: Props) {
       className="flex flex-col gap-4"
     >
       {error && (
-        <div className="bg-red-50 text-red-700 text-sm p-3 rounded-lg border border-red-200">
+        <div role="alert" className="bg-red-50 text-red-700 text-sm p-3 rounded-lg border border-red-200">
           {error}
         </div>
       )}

@@ -14,7 +14,7 @@ export default function RegisterPage() {
   async function handleRegister(data: { email: string; password: string }) {
     setLoading(true)
     setError(null)
-    const { error } = await supabase.auth.signUp({
+    const { data: authData, error } = await supabase.auth.signUp({
       ...data,
       options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
     })
@@ -23,7 +23,14 @@ export default function RegisterPage() {
       setLoading(false)
       return
     }
-    router.push('/dashboard')
+    // If session exists, user is logged in immediately (email confirmation disabled)
+    // If no session, email confirmation is required
+    if (authData.session) {
+      router.push('/dashboard')
+    } else {
+      setError(null)
+      router.push('/auth/login?message=Vérifiez votre email pour confirmer votre compte')
+    }
   }
 
   return (

@@ -27,6 +27,7 @@ export async function GET(request: Request) {
     if (!error) {
       return NextResponse.redirect(`${origin}/dashboard`)
     }
+    console.error('[auth/callback] Error exchanging code:', error)
   }
 
   return NextResponse.redirect(`${origin}/auth/login?error=auth_callback_failed`)
