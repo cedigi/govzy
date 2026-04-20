@@ -8,7 +8,6 @@ import Probleme from "@/components/landing/Probleme";
 import Solution from "@/components/landing/Solution";
 import CommentCaMarche from "@/components/landing/CommentCaMarche";
 import Fonctionnalites from "@/components/landing/Fonctionnalites";
-import Temoignages from "@/components/landing/Temoignages";
 import ListeAttente from "@/components/landing/ListeAttente";
 import Footer from "@/components/landing/Footer";
 
@@ -33,10 +32,7 @@ export default function LandingPage() {
       {/* 5. Fonctionnalités : grille complète des features */}
       <Fonctionnalites />
 
-      {/* 6. Témoignages : social proof */}
-      <Temoignages />
-
-      {/* 7. Liste d'attente : CTA principal de conversion */}
+      {/* 6. Liste d'attente : CTA principal de conversion */}
       <ListeAttente />
 
       {/* 8. Footer : liens légaux et contact */}
