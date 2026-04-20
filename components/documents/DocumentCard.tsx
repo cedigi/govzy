@@ -29,11 +29,35 @@ export default function DocumentCard({ document: doc }: Props) {
 
   return (
     <Link href={`/documents/${doc.id}`} className="block">
-      <div className="bg-white rounded-xl border border-slate-200 p-4 hover:border-[#F97316] hover:shadow-sm transition-all relative group">
+      <div style={{
+        background: 'rgba(255,255,255,0.05)',
+        border: '1px solid rgba(255,255,255,0.09)',
+        backdropFilter: 'blur(10px)',
+        borderRadius: '14px',
+        padding: '16px',
+        transition: 'all 0.2s ease',
+        position: 'relative',
+      }}
+        onMouseEnter={e => {
+          (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.08)'
+          ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(249,115,22,0.4)'
+          ;(e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'
+          ;(e.currentTarget as HTMLElement).style.boxShadow = '0 8px 30px rgba(0,0,0,0.3)'
+        }}
+        onMouseLeave={e => {
+          (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)'
+          ;(e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.09)'
+          ;(e.currentTarget as HTMLElement).style.transform = 'translateY(0)'
+          ;(e.currentTarget as HTMLElement).style.boxShadow = 'none'
+        }}
+      >
         <button
           onClick={handleDelete}
           disabled={deleting}
-          className="absolute top-2 right-2 p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+          className="absolute top-2 right-2 p-1.5 rounded-lg transition-colors"
+          style={{ color: 'rgba(255,255,255,0.35)' }}
+          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#ef4444'; (e.currentTarget as HTMLElement).style.background = 'rgba(239,68,68,0.1)' }}
+          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.35)'; (e.currentTarget as HTMLElement).style.background = 'transparent' }}
           title="Supprimer"
         >
           {deleting ? (
@@ -49,18 +73,23 @@ export default function DocumentCard({ document: doc }: Props) {
         </button>
 
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#1B3A6B]/10 flex items-center justify-center text-xl flex-shrink-0">
+          <div style={{
+            width: '40px', height: '40px', borderRadius: '10px',
+            background: 'rgba(249,115,22,0.15)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '20px', flexShrink: 0,
+          }}>
             {emoji}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-slate-800 truncate">{doc.nom}</p>
-            <p className="text-xs text-[#F97316] font-medium mt-0.5 capitalize">
+            <p className="truncate" style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>{doc.nom}</p>
+            <p className="mt-0.5 capitalize" style={{ fontSize: '11px', color: '#f97316', fontWeight: 500 }}>
               {doc.type_detecte?.replace(/_/g, ' ') ?? 'Analyse en cours…'}
             </p>
             {doc.resume && (
-              <p className="text-xs text-slate-500 mt-1 line-clamp-2">{doc.resume}</p>
+              <p className="mt-1 line-clamp-2" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>{doc.resume}</p>
             )}
-            <p className="text-xs text-slate-300 mt-2">{date}</p>
+            <p className="mt-2" style={{ fontSize: '10px', color: 'rgba(255,255,255,0.2)' }}>{date}</p>
           </div>
         </div>
       </div>

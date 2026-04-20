@@ -16,39 +16,98 @@ export default function Sidebar({ prenom }: Props) {
   const pathname = usePathname()
 
   return (
-    <aside className="w-[200px] bg-[#1B3A6B] flex flex-col items-stretch py-4 px-3 gap-1 flex-shrink-0 min-h-screen">
-      {/* Logo */}
-      <div className="bg-[#F97316] rounded-xl px-3 py-3 mb-4 text-center">
-        <span className="text-white font-extrabold text-base tracking-widest">GOVZY</span>
+    <aside style={{
+      width: '200px',
+      flexShrink: 0,
+      background: 'rgba(255,255,255,0.04)',
+      borderRight: '1px solid rgba(255,255,255,0.08)',
+      backdropFilter: 'blur(20px)',
+      padding: '20px 12px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '4px',
+      minHeight: '100vh',
+    }}>
+      <div style={{
+        background: 'linear-gradient(135deg, #f97316, #ea580c)',
+        borderRadius: '12px',
+        padding: '12px 16px',
+        fontWeight: 800,
+        fontSize: '15px',
+        letterSpacing: '2px',
+        marginBottom: '20px',
+        textAlign: 'center',
+        color: 'white',
+        boxShadow: '0 4px 20px rgba(249,115,22,0.3)',
+      }}>
+        GOVZY
       </div>
 
-      {/* Nav */}
       {navItems.map(({ href, label, icon: Icon }) => {
         const active = pathname === href || (href !== '/dashboard' && pathname.startsWith(href))
         return (
           <Link
             key={href}
             href={href}
-            className={`flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors ${
-              active ? 'bg-white/15' : 'hover:bg-white/10'
-            }`}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '10px 12px',
+              borderRadius: '10px',
+              fontSize: '13px',
+              fontWeight: 500,
+              textDecoration: 'none',
+              color: active ? 'white' : 'rgba(255,255,255,0.5)',
+              background: active ? 'rgba(249,115,22,0.15)' : 'transparent',
+              border: active ? '1px solid rgba(249,115,22,0.25)' : '1px solid transparent',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={e => {
+              if (!active) {
+                (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.07)'
+                ;(e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.9)'
+                ;(e.currentTarget as HTMLElement).style.transform = 'translateX(4px)'
+              }
+            }}
+            onMouseLeave={e => {
+              if (!active) {
+                (e.currentTarget as HTMLElement).style.background = 'transparent'
+                ;(e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.5)'
+                ;(e.currentTarget as HTMLElement).style.transform = 'translateX(0)'
+              }
+            }}
+            onMouseDown={e => {
+              (e.currentTarget as HTMLElement).style.transform = 'translateX(2px) scale(0.97)'
+              ;(e.currentTarget as HTMLElement).style.background = 'rgba(249,115,22,0.1)'
+              ;(e.currentTarget as HTMLElement).style.color = '#f97316'
+            }}
+            onMouseUp={e => {
+              if (!active) {
+                (e.currentTarget as HTMLElement).style.transform = 'translateX(4px)'
+                ;(e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.07)'
+                ;(e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.9)'
+              }
+            }}
           >
-            <Icon size={18} className={active ? 'text-white' : 'text-white/60'} />
-            <span className={`text-sm font-medium ${active ? 'text-white' : 'text-white/60'}`}>
-              {label}
-            </span>
+            <Icon size={18} style={{ color: active ? 'white' : 'rgba(255,255,255,0.6)', flexShrink: 0 }} />
+            <span>{label}</span>
           </Link>
         )
       })}
 
-      {/* Avatar */}
-      <div className="mt-auto flex items-center gap-3 px-3 py-2">
-        <div className="w-8 h-8 rounded-full bg-[#F97316] flex items-center justify-center flex-shrink-0">
-          <span className="text-white text-xs font-bold">
-            {prenom?.[0]?.toUpperCase() ?? 'U'}
-          </span>
+      <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px' }}>
+        <div style={{
+          width: '32px', height: '32px', borderRadius: '50%',
+          background: 'linear-gradient(135deg, #f97316, #ea580c)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontWeight: 700, fontSize: '13px', color: 'white', flexShrink: 0,
+        }}>
+          {prenom?.[0]?.toUpperCase() ?? 'U'}
         </div>
-        <span className="text-white/70 text-sm truncate">{prenom ?? 'Moi'}</span>
+        <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {prenom ?? 'Moi'}
+        </span>
       </div>
     </aside>
   )

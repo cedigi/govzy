@@ -72,7 +72,7 @@ export default function DocumentUpload({ variant, onSuccess }: Props) {
         <button
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="flex items-center gap-2 bg-[#F97316] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors disabled:opacity-60"
+          className="btn-shimmer disabled:opacity-60"
         >
           <Upload size={16} />
           {uploading ? 'Analyse en cours…' : 'Scanner un doc'}

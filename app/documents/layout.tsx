@@ -15,7 +15,7 @@ export default async function DocumentsLayout({ children }: { children: React.Re
     .single() as { data: { prenom: string | null } | null; error: unknown }
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen" style={{ background: 'linear-gradient(135deg, #0a1628 0%, #0f1f3d 50%, #0a1628 100%)' }}>
       <Sidebar prenom={profile?.prenom ?? null} />
       <main className="flex-1 p-6 overflow-auto">
         {children}

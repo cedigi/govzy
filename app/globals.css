@@ -7,11 +7,44 @@
 
 /* Variables CSS globales Govzy */
 :root {
-  --background: #F5F7FA;
-  --foreground: #2D3748;
+  --background: #060d1a;
+  --foreground: #ffffff;
   --govzy-blue: #1B3F8B;
   --govzy-blue-light: #4A90D9;
-  --govzy-orange: #FF6B35;
+  --govzy-orange: #f97316;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.09);
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.btn-shimmer {
+  background: linear-gradient(90deg, #f97316 0%, #fbbf24 40%, #f97316 80%);
+  background-size: 200% auto;
+  animation: shimmer 4s linear infinite;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  color: white;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-shimmer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(249, 115, 22, 0.5);
+}
+.btn-shimmer:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 2px 10px rgba(249, 115, 22, 0.3);
 }
 
 /* Reset base mobile-first */

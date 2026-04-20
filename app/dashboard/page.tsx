@@ -45,10 +45,10 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-lg font-bold text-[#1B3A6B]">
+          <h1 className="text-lg font-bold" style={{ color: 'white' }}>
             Bonjour {profile?.prenom ?? 'utilisateur'} 👋
           </h1>
-          <p className="text-sm text-slate-400">Que souhaitez-vous faire aujourd&apos;hui ?</p>
+          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>Que souhaitez-vous faire aujourd&apos;hui ?</p>
         </div>
         <DocumentUpload variant="button" />
       </div>
@@ -94,15 +94,23 @@ async function RecentDocuments({ userId, supabase }: { userId: string; supabase:
     .limit(5)
 
   return (
-    <div className="flex-1 bg-white rounded-xl border border-slate-200 p-4">
-      <h2 className="text-sm font-semibold text-[#1B3A6B] mb-3">Documents récents</h2>
+    <div className="flex-1 rounded-xl p-4" style={{
+      background: 'rgba(255,255,255,0.05)',
+      border: '1px solid rgba(255,255,255,0.09)',
+      backdropFilter: 'blur(10px)',
+    }}>
+      <h2 className="text-sm font-semibold mb-3" style={{ color: 'rgba(255,255,255,0.6)' }}>Documents récents</h2>
       <div className="flex flex-col gap-2">
         {(documents ?? []).map((doc: Document) => (
-          <div key={doc.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50">
-            <div className="w-8 h-8 rounded-lg bg-[#1B3A6B]/10 flex items-center justify-center text-sm">📄</div>
+          <div key={doc.id} className="flex items-center gap-3 p-2 rounded-lg" style={{ transition: 'background 0.2s' }}
+            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+          >
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm"
+              style={{ background: 'rgba(249,115,22,0.15)' }}>📄</div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-slate-700 truncate">{doc.nom}</p>
-              <p className="text-xs text-slate-400">{doc.type_detecte ?? 'Analyse en cours…'}</p>
+              <p className="text-sm font-medium truncate" style={{ color: 'rgba(255,255,255,0.8)' }}>{doc.nom}</p>
+              <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>{doc.type_detecte ?? 'Analyse en cours…'}</p>
             </div>
           </div>
         ))}

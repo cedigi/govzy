@@ -15,8 +15,8 @@ export default async function DocumentsPage() {
   if (docsError) {
     return (
       <div className="flex flex-col gap-5">
-        <h1 className="text-lg font-bold text-[#1B3A6B]">Mes documents</h1>
-        <div className="bg-red-50 text-red-700 text-sm p-4 rounded-xl border border-red-200">
+        <h1 className="text-lg font-bold" style={{ color: 'white' }}>Mes documents</h1>
+        <div className="text-sm p-4 rounded-xl" style={{ background: 'rgba(239,68,68,0.1)', color: '#fca5a5', border: '1px solid rgba(239,68,68,0.3)' }}>
           Erreur lors du chargement des documents. Veuillez réessayer.
         </div>
       </div>
@@ -26,15 +26,18 @@ export default async function DocumentsPage() {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-bold text-[#1B3A6B]">Mes documents</h1>
+        <h1 className="text-lg font-bold" style={{ color: 'white' }}>Mes documents</h1>
         <DocumentUpload variant="button" />
       </div>
 
       {!documents?.length ? (
-        <div className="bg-white rounded-xl border-2 border-dashed border-slate-200 p-12 flex flex-col items-center gap-3 text-center">
+        <div className="rounded-xl p-12 flex flex-col items-center gap-3 text-center" style={{
+          border: '2px dashed rgba(255,255,255,0.1)',
+          background: 'rgba(255,255,255,0.03)',
+        }}>
           <span className="text-4xl">📂</span>
-          <p className="text-sm font-semibold text-[#1B3A6B]">Aucun document pour l&apos;instant</p>
-          <p className="text-xs text-slate-400">Scannez ou importez votre premier document</p>
+          <p className="text-sm font-semibold" style={{ color: 'white' }}>Aucun document pour l&apos;instant</p>
+          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>Scannez ou importez votre premier document</p>
           <DocumentUpload variant="button" />
         </div>
       ) : (
