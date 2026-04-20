@@ -87,8 +87,19 @@ export type Database = {
   }
 }
 
+export type AideProbabilite = 'confirmee' | 'probable' | 'possible' | 'faible'
+
+export type Aide = {
+  nom: string
+  description: string
+  lien?: string
+  probabilite?: AideProbabilite
+  montant_possible?: string
+  document_requis?: string
+}
+
 export type SuggestionContenu =
-  | { type: 'aides'; liste: { nom: string; description: string; lien?: string }[] }
+  | { type: 'aides'; liste: Aide[] }
   | { type: 'manque_docs'; docs_requis: string[]; message: string }
 
 export type Profile = Database['public']['Tables']['profiles']['Row']

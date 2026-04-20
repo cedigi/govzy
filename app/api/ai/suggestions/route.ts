@@ -50,20 +50,23 @@ Voici les documents d'un utilisateur belge :
 ${docsContext}
 
 Analyse ces documents et détermine si l'utilisateur peut bénéficier d'aides belges.
+Pour chaque aide, indique une probabilité (confirmee/probable/possible/faible) et un montant estimé si possible.
+Inclus aussi des aides conditionnelles (probabilite "possible" ou "faible") même si tu manques de docs.
 
 Réponds UNIQUEMENT en JSON sans markdown :
 
 Si tu as des aides à proposer :
-{"type":"aides","liste":[{"nom":"<nom>","description":"<pourquoi>","lien":"<url ou omets>"}]}
+{"type":"aides","liste":[{"nom":"<nom>","description":"<pourquoi>","lien":"<url ou omets>","probabilite":"confirmee|probable|possible|faible","montant_possible":"<ex: 200-400€/an ou omets>","document_requis":"<doc manquant pour confirmer ou omets>"}]}
 
-Si tu n'as pas assez d'informations :
+Si tu n'as vraiment aucune information :
 {"type":"manque_docs","docs_requis":["<doc 1>","<doc 2>"],"message":"<explication>"}`
 
   let contenu: SuggestionContenu
   try {
     const result = await geminiFlash.generateContent(prompt)
     const text = result.response.text()
-    contenu = JSON.parse(text.replace(/```json\n?|\n?```/g, '').trim()) as SuggestionContenu
+    const jsonMatch = text.match(/\{[\s\S]*\}/)
+    contenu = JSON.parse(jsonMatch ? jsonMatch[0] : text) as SuggestionContenu
   } catch (err) {
     console.error('[suggestions] Gemini error:', err)
     contenu = {
