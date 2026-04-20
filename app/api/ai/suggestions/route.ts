@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { geminiFlash, SYSTEM_PROMPT } from '@/lib/gemini'
 import type { SuggestionContenu } from '@/lib/supabase/types'
@@ -16,10 +16,10 @@ async function saveSuggestion(
   contenu: SuggestionContenu,
   statut: 'detectee' | 'en_attente_docs'
 ) {
-  await (supabase.from('suggestions') as any).insert({ user_id: userId, contenu, statut })
+  await (supabase.from('suggestions') as unknown as { insert: (v: unknown) => Promise<unknown> }).insert({ user_id: userId, contenu, statut })
 }
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
