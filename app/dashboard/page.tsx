@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import StatsRow from '@/components/dashboard/StatsRow'
 import EmptyStateWrapper from '@/components/dashboard/EmptyStateWrapper'
 import DocumentUpload from '@/components/documents/DocumentUpload'
+import AIAssistant from '@/components/dashboard/AIAssistant'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database, Document } from '@/lib/supabase/types'
 
@@ -21,6 +22,14 @@ export default async function DashboardPage() {
     .eq('user_id', user!.id)
 
   const hasDocuments = (docCount ?? 0) > 0
+
+  const { data: recentMessages } = await supabase
+    .from('messages')
+    .select('id, role, content')
+    .eq('user_id', user!.id)
+    .is('document_id', null)
+    .order('created_at', { ascending: false })
+    .limit(10)
 
   return (
     <div className="flex flex-col gap-5 h-full">
@@ -51,9 +60,8 @@ export default async function DashboardPage() {
             <RecentDocuments userId={user!.id} supabase={supabase} />
           )}
         </div>
-        {/* AIAssistant will go here in Task 9 */}
-        <div className="w-80 flex-shrink-0 bg-[#1B3A6B] rounded-xl flex items-center justify-center">
-          <p className="text-white/30 text-xs">Assistant IA (Task 9)</p>
+        <div className="w-80 flex-shrink-0 h-[500px]">
+          <AIAssistant messages={(recentMessages ?? []).reverse()} />
         </div>
       </div>
     </div>
