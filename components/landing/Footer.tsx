@@ -97,11 +97,11 @@ export default function Footer() {
 
             {/* Email de contact */}
             <a
-              href="mailto:hello@govzy.be"
+              href="mailto:hello.govzy@gmail.com"
               className="inline-flex items-center gap-2 text-govzy-orange hover:text-orange-400 text-sm font-medium transition-colors"
             >
               <Mail className="w-4 h-4" />
-              hello@govzy.be
+              hello.govzy@gmail.com
             </a>
           </div>
         </div>
