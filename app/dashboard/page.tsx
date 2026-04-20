@@ -3,6 +3,7 @@ import StatsRow from '@/components/dashboard/StatsRow'
 import EmptyStateWrapper from '@/components/dashboard/EmptyStateWrapper'
 import DocumentUpload from '@/components/documents/DocumentUpload'
 import AIAssistant from '@/components/dashboard/AIAssistant'
+import SuggestionsPanel from '@/components/dashboard/SuggestionsPanel'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database, Document } from '@/lib/supabase/types'
 
@@ -30,6 +31,14 @@ export default async function DashboardPage() {
     .is('document_id', null)
     .order('created_at', { ascending: false })
     .limit(10)
+
+  const { data: lastSuggestion } = await supabase
+    .from('suggestions')
+    .select('contenu, statut')
+    .eq('user_id', user!.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single() as { data: { contenu: import('@/lib/supabase/types').SuggestionContenu; statut: string } | null; error: unknown }
 
   return (
     <div className="flex flex-col gap-5 h-full">
@@ -64,6 +73,14 @@ export default async function DashboardPage() {
           <AIAssistant messages={(recentMessages ?? []).reverse()} />
         </div>
       </div>
+
+      {/* Suggestions panel — shown when user has docs or already has a suggestion */}
+      {((docCount ?? 0) >= 3 || lastSuggestion) && (
+        <SuggestionsPanel
+          docCount={docCount ?? 0}
+          initialContenu={lastSuggestion?.contenu ?? null}
+        />
+      )}
     </div>
   )
 }
