@@ -6,11 +6,22 @@ export default async function DocumentsPage() {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  const { data: documents } = await supabase
+  const { data: documents, error: docsError } = await supabase
     .from('documents')
     .select('*')
     .eq('user_id', user!.id)
     .order('created_at', { ascending: false }) as { data: import('@/lib/supabase/types').Document[] | null; error: unknown }
+
+  if (docsError) {
+    return (
+      <div className="flex flex-col gap-5">
+        <h1 className="text-lg font-bold text-[#1B3A6B]">Mes documents</h1>
+        <div className="bg-red-50 text-red-700 text-sm p-4 rounded-xl border border-red-200">
+          Erreur lors du chargement des documents. Veuillez réessayer.
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col gap-5">

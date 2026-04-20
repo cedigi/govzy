@@ -1,20 +1,11 @@
 import Link from 'next/link'
 import type { Document } from '@/lib/supabase/types'
-
-const typeEmoji: Record<string, string> = {
-  fiche_de_paie: '💰',
-  contrat_de_travail: '📋',
-  facture: '🧾',
-  composition_de_menage: '👨‍👩‍👧',
-  avertissement_extrait_de_role: '🏛️',
-  document_cpas: '🤝',
-  autre: '📄',
-}
+import { TYPE_EMOJI } from '@/lib/constants/documents'
 
 type Props = { document: Document }
 
 export default function DocumentCard({ document: doc }: Props) {
-  const emoji = typeEmoji[doc.type_detecte ?? 'autre'] ?? '📄'
+  const emoji = TYPE_EMOJI[doc.type_detecte ?? 'autre'] ?? '📄'
   const date = new Date(doc.created_at).toLocaleDateString('fr-BE', {
     day: 'numeric',
     month: 'short',

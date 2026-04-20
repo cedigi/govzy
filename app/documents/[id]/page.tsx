@@ -3,17 +3,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import ChatInterface from '@/components/documents/ChatInterface'
+import { TYPE_EMOJI } from '@/lib/constants/documents'
 import type { Document, Message } from '@/lib/supabase/types'
-
-const typeEmoji: Record<string, string> = {
-  fiche_de_paie: '💰',
-  contrat_de_travail: '📋',
-  facture: '🧾',
-  composition_de_menage: '👨‍👩‍👧',
-  avertissement_extrait_de_role: '🏛️',
-  document_cpas: '🤝',
-  autre: '📄',
-}
 
 export default async function DocumentPage({ params }: { params: { id: string } }) {
   const supabase = createClient()
@@ -31,7 +22,8 @@ export default async function DocumentPage({ params }: { params: { id: string } 
       .select('id, role, content')
       .eq('document_id', params.id)
       .eq('user_id', user!.id)
-      .order('created_at', { ascending: true }) as unknown as Promise<{ data: Pick<Message, 'id' | 'role' | 'content'>[] | null; error: unknown }>,
+      .order('created_at', { ascending: true })
+      .limit(50) as unknown as Promise<{ data: Pick<Message, 'id' | 'role' | 'content'>[] | null; error: unknown }>,
   ])
 
   const doc = docResult.data
@@ -39,7 +31,7 @@ export default async function DocumentPage({ params }: { params: { id: string } 
 
   if (!doc) notFound()
 
-  const emoji = typeEmoji[doc.type_detecte ?? 'autre'] ?? '📄'
+  const emoji = TYPE_EMOJI[doc.type_detecte ?? 'autre'] ?? '📄'
   const date = new Date(doc.created_at).toLocaleDateString('fr-BE', {
     day: 'numeric',
     month: 'long',
@@ -50,7 +42,7 @@ export default async function DocumentPage({ params }: { params: { id: string } 
     <div className="flex flex-col gap-5">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <Link href="/documents" className="text-slate-400 hover:text-slate-600 transition-colors">
+        <Link href="/documents" aria-label="Retour aux documents" className="text-slate-400 hover:text-slate-600 transition-colors">
           <ArrowLeft size={20} />
         </Link>
         <div className="flex items-center gap-2">
