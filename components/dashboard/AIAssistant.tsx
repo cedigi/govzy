@@ -24,7 +24,7 @@ export default function AIAssistant({ messages: initialMessages, documentId }: P
     if (!input.trim() || loading) return
     const userMessage = input.trim()
     setInput('')
-    setMessages((prev) => [...prev, { id: `temp-${Date.now()}`, role: 'user', content: userMessage }])
+    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'user', content: userMessage }])
     setLoading(true)
 
     try {
@@ -33,10 +33,14 @@ export default function AIAssistant({ messages: initialMessages, documentId }: P
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userMessage, document_id: documentId }),
       })
+      if (!res.ok) {
+        const errData = await res.json() as { error?: string }
+        throw new Error(errData.error ?? `Erreur ${res.status}`)
+      }
       const data = await res.json() as { reply: string }
-      setMessages((prev) => [...prev, { id: `temp-${Date.now() + 1}`, role: 'assistant', content: data.reply }])
+      setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: data.reply }])
     } catch {
-      setMessages((prev) => [...prev, { id: `temp-err-${Date.now()}`, role: 'assistant', content: 'Erreur de connexion. Réessayez.' }])
+      setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', content: 'Erreur de connexion. Réessayez.' }])
     } finally {
       setLoading(false)
     }

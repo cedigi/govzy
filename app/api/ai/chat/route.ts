@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       .select('nom, type_detecte, resume')
       .eq('id', document_id)
       .eq('user_id', user.id)
-      .single()
+      .single() as { data: { nom: string; type_detecte: string | null; resume: string | null } | null; error: unknown }
     if (doc) {
       documentContext = `\nContexte du document "${doc.nom}" (${doc.type_detecte}) :\n${doc.resume}\n`
     }
@@ -37,9 +37,9 @@ export async function POST(request: NextRequest) {
     .order('created_at', { ascending: false })
     .limit(10)
 
-  const { data: history } = document_id
+  const { data: history } = (document_id
     ? await historyQuery.eq('document_id', document_id)
-    : await historyQuery.is('document_id', null)
+    : await historyQuery.is('document_id', null)) as { data: { role: string; content: string }[] | null; error: unknown }
 
   const historyText = (history ?? [])
     .reverse()
@@ -64,9 +64,10 @@ export async function POST(request: NextRequest) {
   }
 
   // Sauvegarder les deux messages
-  await supabase.from('messages').insert([
-    { user_id: user.id, document_id: document_id ?? null, role: 'user' as const, content: message },
-    { user_id: user.id, document_id: document_id ?? null, role: 'assistant' as const, content: reply },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await (supabase.from('messages') as any).insert([
+    { user_id: user.id, document_id: document_id ?? null, role: 'user', content: message },
+    { user_id: user.id, document_id: document_id ?? null, role: 'assistant', content: reply },
   ])
 
   return NextResponse.json({ reply })
