@@ -14,7 +14,7 @@ export async function DELETE(
     .select('storage_path')
     .eq('id', params.id)
     .eq('user_id', user.id)
-    .single()
+    .single() as { data: { storage_path: string } | null; error: unknown }
 
   if (fetchError || !doc) {
     return NextResponse.json({ error: 'Document introuvable' }, { status: 404 })
