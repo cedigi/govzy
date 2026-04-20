@@ -1,15 +1,29 @@
-export default function AidesPage() {
+import { createClient } from '@/lib/supabase/server'
+import AidesClient from './AidesClient'
+import type { SuggestionContenu } from '@/lib/supabase/types'
+
+export default async function AidesPage() {
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const { count: docCount } = await supabase
+    .from('documents')
+    .select('*', { count: 'exact', head: true })
+    .eq('user_id', user!.id)
+
+  const { data: lastSuggestion } = await supabase
+    .from('suggestions')
+    .select('contenu, created_at')
+    .eq('user_id', user!.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single() as { data: { contenu: SuggestionContenu; created_at: string } | null; error: unknown }
+
   return (
-    <div className="flex flex-col gap-5">
-      <h1 className="text-lg font-bold" style={{ color: 'white' }}>Aides disponibles</h1>
-      <div className="rounded-xl p-12 flex flex-col items-center gap-3 text-center" style={{
-        border: '2px dashed rgba(255,255,255,0.1)',
-        background: 'rgba(255,255,255,0.03)',
-      }}>
-        <span className="text-4xl">💶</span>
-        <p className="text-sm font-semibold" style={{ color: 'white' }}>Bientôt disponible</p>
-        <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>Vos aides et allocations personnalisées apparaîtront ici</p>
-      </div>
-    </div>
+    <AidesClient
+      docCount={docCount ?? 0}
+      initialContenu={lastSuggestion?.contenu ?? null}
+      lastAnalysedAt={lastSuggestion?.created_at ?? null}
+    />
   )
 }
