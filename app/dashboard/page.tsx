@@ -1,18 +1,23 @@
 import { createClient } from '@/lib/supabase/server'
 import StatsRow from '@/components/dashboard/StatsRow'
 import EmptyStateWrapper from '@/components/dashboard/EmptyStateWrapper'
+import type { SupabaseClient } from '@supabase/supabase-js'
+import type { Database, Document } from '@/lib/supabase/types'
 
 export default async function DashboardPage() {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  const [
-    { data: profile },
-    { count: docCount },
-  ] = await Promise.all([
-    supabase.from('profiles').select('prenom').eq('id', user!.id).single(),
-    supabase.from('documents').select('*', { count: 'exact', head: true }).eq('user_id', user!.id),
-  ])
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('prenom')
+    .eq('id', user!.id)
+    .single() as { data: { prenom: string | null } | null; error: unknown }
+
+  const { count: docCount } = await supabase
+    .from('documents')
+    .select('*', { count: 'exact', head: true })
+    .eq('user_id', user!.id)
 
   const hasDocuments = (docCount ?? 0) > 0
 
@@ -22,7 +27,7 @@ export default async function DashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-lg font-bold text-[#1B3A6B]">
-            Bonjour {profile?.prenom} 👋
+            Bonjour {profile?.prenom ?? 'utilisateur'} 👋
           </h1>
           <p className="text-sm text-slate-400">Que souhaitez-vous faire aujourd&apos;hui ?</p>
         </div>
@@ -55,7 +60,7 @@ export default async function DashboardPage() {
   )
 }
 
-async function RecentDocuments({ userId, supabase }: { userId: string; supabase: any }) {
+async function RecentDocuments({ userId, supabase }: { userId: string; supabase: SupabaseClient<Database> }) {
   const { data: documents } = await supabase
     .from('documents')
     .select('id, nom, type_detecte')
@@ -67,7 +72,7 @@ async function RecentDocuments({ userId, supabase }: { userId: string; supabase:
     <div className="flex-1 bg-white rounded-xl border border-slate-200 p-4">
       <h2 className="text-sm font-semibold text-[#1B3A6B] mb-3">Documents récents</h2>
       <div className="flex flex-col gap-2">
-        {(documents ?? []).map((doc: { id: string; nom: string; type_detecte: string | null }) => (
+        {(documents ?? []).map((doc: Document) => (
           <div key={doc.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50">
             <div className="w-8 h-8 rounded-lg bg-[#1B3A6B]/10 flex items-center justify-center text-sm">📄</div>
             <div className="flex-1 min-w-0">
