@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import StatsRow from '@/components/dashboard/StatsRow'
 import EmptyStateWrapper from '@/components/dashboard/EmptyStateWrapper'
+import DocumentUpload from '@/components/documents/DocumentUpload'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database, Document } from '@/lib/supabase/types'
 
@@ -31,8 +32,7 @@ export default async function DashboardPage() {
           </h1>
           <p className="text-sm text-slate-400">Que souhaitez-vous faire aujourd&apos;hui ?</p>
         </div>
-        {/* DocumentUpload button will go here in Task 8 */}
-        <div id="upload-button-placeholder" />
+        <DocumentUpload variant="button" />
       </div>
 
       {/* Stats */}
