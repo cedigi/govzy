@@ -30,7 +30,7 @@ export default function Sidebar({ prenom }: Props) {
       minHeight: '100vh',
     }}>
       <div style={{ marginBottom: '20px', padding: '4px 8px' }}>
-        <Image src="/logo-govzy.png" alt="Govzy" width={160} height={48} style={{ width: '100%', height: 'auto' }} priority />
+        <Image src="/logo-govzy.png" alt="Govzy" width={120} height={36} style={{ width: '120px', height: 'auto' }} priority />
       </div>
 
       {navItems.map(({ href, label, icon: Icon }) => {
