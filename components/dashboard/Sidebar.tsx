@@ -29,7 +29,7 @@ export default function Sidebar({ prenom }: Props) {
       gap: '4px',
       minHeight: '100vh',
     }}>
-      <div style={{ marginBottom: '20px', padding: '6px 8px', background: 'white', borderRadius: '12px' }}>
+      <div style={{ marginBottom: '20px', padding: '4px 8px' }}>
         <Image src="/logo-govzy.png" alt="Govzy" width={160} height={48} style={{ width: '100%', height: 'auto' }} priority />
       </div>
 
