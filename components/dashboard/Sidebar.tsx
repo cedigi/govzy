@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, FileText, Euro, Bell } from 'lucide-react'
+import { Home, FileText, Euro, Bell, Settings } from 'lucide-react'
 import Image from 'next/image'
 
 const navItems = [
@@ -9,6 +9,7 @@ const navItems = [
   { href: '/documents', label: 'Documents', icon: FileText },
   { href: '/dashboard/aides', label: 'Aides', icon: Euro },
   { href: '/dashboard/alertes', label: 'Alertes', icon: Bell },
+  { href: '/dashboard/compte', label: 'Mon compte', icon: Settings },
 ]
 
 type Props = { prenom: string | null }

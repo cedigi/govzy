@@ -83,6 +83,7 @@ export default function Footer() {
                 { label: "Politique de confidentialité", href: "/confidentialite" },
                 { label: "Conditions d'utilisation", href: "/conditions" },
                 { label: "Mentions légales", href: "/mentions-legales" },
+                { label: "Supprimer mes données (RGPD)", href: "/dashboard/compte" },
               ].map((lien) => (
                 <li key={lien.label}>
                   <a
