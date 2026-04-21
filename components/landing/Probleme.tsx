@@ -75,12 +75,12 @@ export default function Probleme() {
             Saviez-vous que...
           </p>
           <p className="text-white text-2xl md:text-3xl font-bold mb-3">
-            <span className="text-govzy-orange">73%</span> des Belges ont raté
-            au moins une aide financière
+            Des milliers d&apos;euros d&apos;aides belges restent{" "}
+            <span className="text-govzy-orange">non réclamées chaque année</span>
           </p>
           <p className="text-white/60 text-sm">
-            par manque d&apos;information — en moyenne{" "}
-            <strong className="text-white">2 400€ perdus par ménage et par an</strong>
+            par manque d&apos;information claire —{" "}
+            <strong className="text-white">l&apos;administration belge est reconnue comme l&apos;une des plus complexes d&apos;Europe</strong>
           </p>
         </div>
 
