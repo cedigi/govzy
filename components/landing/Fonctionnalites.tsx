@@ -60,7 +60,7 @@ const fonctionnalites = [
   {
     icon: Lock,
     titre: "RGPD & Sécurité",
-    description: "Données hébergées en Europe. Chiffrement de bout en bout.",
+    description: "Données chiffrées AES-256 au repos et hébergées en Europe.",
     badge: "RGPD",
     couleur: "bg-gray-50 text-gray-600",
   },
