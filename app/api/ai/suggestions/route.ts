@@ -49,14 +49,20 @@ export async function POST() {
 Voici les documents d'un utilisateur belge :
 ${docsContext}
 
-Analyse ces documents et détermine si l'utilisateur peut bénéficier d'aides belges.
+Analyse ces documents et détermine si l'utilisateur pourrait bénéficier d'aides belges.
 Pour chaque aide, indique une probabilité (confirmee/probable/possible/faible) et un montant estimé si possible.
 Inclus aussi des aides conditionnelles (probabilite "possible" ou "faible") même si tu manques de docs.
+
+IMPORTANT : Dans les descriptions, utilise TOUJOURS un langage conditionnel et indicatif.
+- ✅ "D'après vos documents, vous pourriez être éligible à..."
+- ✅ "Sous réserve de vérification auprès de [organisme]..."
+- ❌ Interdit : "Vous avez droit à", "Vous êtes éligible", "Vous n'êtes pas éligible"
+Termine chaque description par une recommandation de vérification auprès de l'organisme compétent.
 
 Réponds UNIQUEMENT en JSON sans markdown :
 
 Si tu as des aides à proposer :
-{"type":"aides","liste":[{"nom":"<nom>","description":"<pourquoi>","lien":"<url ou omets>","probabilite":"confirmee|probable|possible|faible","montant_possible":"<ex: 200-400€/an ou omets>","document_requis":"<doc manquant pour confirmer ou omets>"}]}
+{"type":"aides","liste":[{"nom":"<nom>","description":"<description conditionnelle avec recommandation de vérification>","lien":"<url ou omets>","probabilite":"confirmee|probable|possible|faible","montant_possible":"<ex: 200-400€/an ou omets>","document_requis":"<doc manquant pour confirmer ou omets>"}]}
 
 Si tu n'as vraiment aucune information :
 {"type":"manque_docs","docs_requis":["<doc 1>","<doc 2>"],"message":"<explication>"}`
