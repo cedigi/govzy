@@ -8,8 +8,8 @@ export async function POST(req: Request) {
 
   const { prenom, nom } = await req.json() as { prenom: string; nom: string }
 
-  const { error } = await supabase
-    .from('profiles')
+  const { error } = await (supabase
+    .from('profiles') as unknown as { update: (v: unknown) => { eq: (col: string, val: string) => Promise<{ error: { message: string } | null }> } })
     .update({ prenom: prenom.trim() || null, nom: nom.trim() || null })
     .eq('id', user.id)
 
