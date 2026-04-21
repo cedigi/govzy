@@ -1,7 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import DeleteAccountModal from '@/components/dashboard/DeleteAccountModal'
-import { User, Mail, Shield } from 'lucide-react'
+import ProfileEditForm from '@/components/dashboard/ProfileEditForm'
+import { Mail, Shield } from 'lucide-react'
 
 export default async function ComptePage() {
   const supabase = createClient()
@@ -28,31 +29,10 @@ export default async function ComptePage() {
 
       {/* Infos profil */}
       <div style={{ ...glass, marginBottom: '16px' }}>
-        <h2 style={{ color: 'rgba(255,255,255,0.9)', fontSize: '15px', fontWeight: 600, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <User size={16} color="#f97316" />
+        <h2 style={{ color: 'rgba(255,255,255,0.9)', fontSize: '15px', fontWeight: 600, marginBottom: '16px' }}>
           Informations personnelles
         </h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {[
-            { label: 'Prénom', value: profile?.prenom },
-            { label: 'Nom', value: profile?.nom },
-          ].map(({ label, value }) => (
-            <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>{label}</span>
-              {value
-                ? <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px' }}>{value}</span>
-                : <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '12px', fontStyle: 'italic' }}>Non renseigné</span>
-              }
-            </div>
-          ))}
-        </div>
-        {(!profile?.prenom || !profile?.nom) && (
-          <p style={{ marginTop: '14px', fontSize: '12px', color: 'rgba(255,255,255,0.3)', lineHeight: 1.5 }}>
-            Ces informations proviennent de votre inscription. Contactez{' '}
-            <a href="mailto:hello.govzy@gmail.com" style={{ color: '#f97316', textDecoration: 'none' }}>hello.govzy@gmail.com</a>{' '}
-            pour les mettre à jour.
-          </p>
-        )}
+        <ProfileEditForm prenom={profile?.prenom ?? null} nom={profile?.nom ?? null} />
       </div>
 
       {/* Email */}
