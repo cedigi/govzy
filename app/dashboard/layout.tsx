@@ -17,8 +17,14 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <div className="flex min-h-screen" style={{ background: 'linear-gradient(135deg, #0a1628 0%, #0f1f3d 50%, #0a1628 100%)' }}>
       <Sidebar prenom={profile?.prenom ?? null} />
-      <main className="flex-1 p-6 overflow-auto">
-        {children}
+      <main className="flex-1 p-6 overflow-auto flex flex-col">
+        <div className="flex-1">
+          {children}
+        </div>
+        <p className="mt-8 text-xs text-center" style={{ color: 'rgba(255,255,255,0.2)', lineHeight: 1.6 }}>
+          Govzy est une initiative privée indépendante, sans affiliation avec l&apos;État belge.
+          Les analyses IA sont indicatives — vérifiez toujours auprès des organismes compétents (CPAS, SPF, mutuelle).
+        </p>
       </main>
     </div>
   )

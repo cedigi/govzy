@@ -106,15 +106,23 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Disclaimer légal renforcé */}
+        <div className="border-t border-white/10 pt-8 mb-6">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-xs text-white/50 leading-relaxed">
+            <span className="text-white/70 font-semibold">⚠️ Information importante : </span>
+            Govzy est une initiative privée indépendante, sans affiliation avec l&apos;État belge ou ses services.
+            Les analyses générées par notre IA sont fournies à titre indicatif uniquement et ne constituent pas un conseil juridique ou fiscal officiel.
+            Vérifiez toujours les informations auprès des organismes compétents (CPAS, SPF, mutuelle, commune) avant toute décision.
+          </div>
+        </div>
+
         {/* Ligne de séparation + copyright */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white/40 text-sm">
             © {annee} Govzy — Tous droits réservés
           </p>
           <p className="text-white/40 text-xs text-center md:text-right">
             Govzy n&apos;est pas un service officiel du gouvernement belge.
-            <br />
-            Aucun conseil fiscal ou juridique définitif ne peut être fourni.
           </p>
         </div>
       </div>
