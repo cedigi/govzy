@@ -33,15 +33,26 @@ export default async function ComptePage() {
           Informations personnelles
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>Prénom</span>
-            <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px' }}>{profile?.prenom ?? '—'}</span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>Nom</span>
-            <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px' }}>{profile?.nom ?? '—'}</span>
-          </div>
+          {[
+            { label: 'Prénom', value: profile?.prenom },
+            { label: 'Nom', value: profile?.nom },
+          ].map(({ label, value }) => (
+            <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '13px' }}>{label}</span>
+              {value
+                ? <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: '13px' }}>{value}</span>
+                : <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '12px', fontStyle: 'italic' }}>Non renseigné</span>
+              }
+            </div>
+          ))}
         </div>
+        {(!profile?.prenom || !profile?.nom) && (
+          <p style={{ marginTop: '14px', fontSize: '12px', color: 'rgba(255,255,255,0.3)', lineHeight: 1.5 }}>
+            Ces informations proviennent de votre inscription. Contactez{' '}
+            <a href="mailto:hello.govzy@gmail.com" style={{ color: '#f97316', textDecoration: 'none' }}>hello.govzy@gmail.com</a>{' '}
+            pour les mettre à jour.
+          </p>
+        )}
       </div>
 
       {/* Email */}
